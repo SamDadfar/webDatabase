@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LibraryAssistance</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+  function changeToHome(){
+hideButton("button1");
+hideButton("button2");
+hideButton("button3");
+hideButton("button4");
+hideButton("button5");
+  }
+    function changeToBook(){
+      unHideAndDefine("button1",showAllBook);
+      unHideAndDefine("button2",addBook);
+      unHideAndDefine("button3",editBook);
+      unHideAndDefine("button4",deleteBook);
+      unHideAndDefine("button5",searchBook);
+      addTestData();
+      //addTestData();
+    }
+    function hideButton(id){
+      var button=document.getElementById(id);
+      button.style.visibility="hidden";
+    }
+    function showAllBook(){
+      getDataList("book");
+    }
+   function unHideAndDefine(id,functionName){
+      var button=document.getElementById(id);
+      button.style.visibility="visible";
+    }
+  function addTestData(){
+    postData("book",'{"name":"The Hunger Games","authorName":"Suzanne Collins","publisherName":"Scholastic Press","numOfPub":7,"yearOfPub":2008,"status":"available"');
+    //postData("book",'{"name":"Loveland: The Octets","authorName":" Gary Rimmer","publisherName":"Goodreads","numOfPub":14,"yearOfPub":2014,"status":"available"');
+    //postData("book",'{"name":"The Adoration of Jenna Fox","authorName":"Mary E. Pearson","publisherName":"Henry Holt and Co","numOfPub":20,"yearOfPub":2008,"status":"available"');
+    //postData("book",'{"name":"From Democracy to Dictatorship","authorName":" Arun D. Ellis","publisherName":"Goodreads","numOfPub":17,"yearOfPub":2017,"status":"available"');
+    }
+    function postData(api,data){
+        var xhttp = new XMLHttpRequest();
+  				xhttp.onreadystatechange = function() {
+    				if (this.readyState == 4 && this.status == 202) {
+      				document.getElementById("Container").innerHTML = this.responseText;
+    				}
+  				};
+          xhttp.open("POST", "http://localhost:8082/"+api, true);
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.send(data);
+  }
+    function getDataList(api){
+          var xhttp = new XMLHttpRequest();
+  				xhttp.onreadystatechange = function() {
+    				if (this.readyState == 4 && this.status == 200) {
+      				document.getElementById("Container").innerHTML = this.responseText;
+    				}
+  				};
+          xhttp.open("GET", "http://localhost:8082/"+api);
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.send();
+    }
+    function addBook(){
+
+    }
+    function editBook(){
+
+    }
+    function deleteBook(){
+
+    }
+    function searchBook(){
+
+    }
+  </script>
+  
+</head>
+<body>
+<div>
+  <nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header" >
+	      <a class="navbar-brand" href="#">ITPH - Fase2 -LibraryAssistance</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#" onclick="changeToHome()">Home</a></li>
+	      <li><a href="#">Page 1</a></li>
+	      <li><a href="#">Page 2</a></li>
+	      <li><a href="#" onclick="changeToBook()">Book</a></li>
+	    </ul>
+	  </div>
+  </nav>
+  </div>
+  <div class="container">
+		<div class="row">
+	        <button id="button1" class="btn btn-primary" style="visibility: hidden">show all book</button>
+          <button id="button2" class="btn btn-primary" style="visibility: hidden">Add Book</button>
+          <button id="button3" class="btn btn-primary" style="visibility: hidden">Edit Book</button>
+          <button id="button4" class="btn btn-primary" style="visibility: hidden">Delete Book</button>
+          <button id="button5" class="btn btn-primary" style="visibility: hidden">Search Book</button>
+
+            <select id="dropdownSort" hidden="true" name="key"></select>
+            <select id="dropdownSortDesc" hidden="true" name="Desc">
+            	<option value="Ascending">Ascending</option>
+            	<option value="Descending"> Descending</option>
+            </select>
+        </div>
+		<div id="Container" class="row">
+      
+        </div>
+    </div>
+</body>
+</html>
